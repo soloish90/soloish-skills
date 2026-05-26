@@ -1,0 +1,26 @@
+---
+name: session-handoff
+description: Write a concise, agent-facing Markdown handoff for a fresh coding-agent session. Use when the user asks to hand off, summarize, condense, preserve, export, resume, or transfer important context from the current session into a new agent session.
+---
+
+# Session Handoff
+
+Create a Markdown handoff document that lets a fresh agent session continue the work without inherited chat context.
+
+If the user names a file or path, write there. Otherwise write `HANDOFF.md` in the current workspace.
+
+Use the current conversation context and light repo inspection. Do not read Codex session JSONL files unless the user explicitly asks for forensic reconstruction.
+
+Write the handoff naturally. Do not turn it into a transcript or force a rigid template. Include whatever is actually useful for the next agent, especially:
+
+- the current goal and next step
+- current repo state, branch, commits, and uncommitted work
+- active architecture and important design boundaries
+- settled decisions and user corrections
+- failed or abandoned paths that should not be reopened casually
+- important files, commands, tests, diagnostics, docs, and config
+- verification status, risks, open questions, and user preferences
+
+Keep it final-state oriented. Make clear what is current versus historical. Be concrete with paths and commands where that helps. Avoid routine chatter, raw logs, secrets, and unnecessary ceremony.
+
+After writing the file, briefly report the path and what the handoff captures.

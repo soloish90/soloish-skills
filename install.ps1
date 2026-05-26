@@ -2,7 +2,7 @@ param(
     [string[]]$Skill = @(),
     [switch]$AllSkills,
     [string[]]$Target = @(),
-    [string]$Repo = "soloish/soloish-skills",
+    [string]$Repo = "soloish90/soloish-skills",
     [string]$Ref = "main",
     [switch]$Yes,
     [switch]$DryRun,
@@ -22,7 +22,7 @@ Options:
   -Skill NAME       Skill to install. Repeatable.
   -AllSkills        Install every skill.
   -Target NAME      codex, codex-legacy, claude, or all. Repeatable.
-  -Repo OWNER/REPO  GitHub repo. Default: soloish/soloish-skills.
+  -Repo OWNER/REPO  GitHub repo. Default: soloish90/soloish-skills.
   -Ref REF          Git ref. Default: main.
   -Yes              Replace existing installed skills without prompting.
   -DryRun           Show what would be installed.

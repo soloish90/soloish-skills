@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="soloish/soloish-skills"
+REPO="soloish90/soloish-skills"
 REF="main"
 SKILLS=()
 TARGETS=()
@@ -20,7 +20,7 @@ Options:
   --skill NAME       Skill to install. Repeatable.
   --all-skills       Install every skill.
   --target NAME      codex, codex-legacy, claude, or all. Repeatable.
-  --repo OWNER/REPO  GitHub repo. Default: soloish/soloish-skills.
+  --repo OWNER/REPO  GitHub repo. Default: soloish90/soloish-skills.
   --ref REF          Git ref. Default: main.
   -y, --yes          Replace existing installed skills without prompting.
   --dry-run          Show what would be installed.

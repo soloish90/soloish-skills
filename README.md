@@ -7,13 +7,13 @@ A small collection of personal agent skills.
 macOS / Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/soloish/soloish-skills/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/soloish90/soloish-skills/main/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/soloish/soloish-skills/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/soloish90/soloish-skills/main/install.ps1 | iex
 ```
 
 ## Skills

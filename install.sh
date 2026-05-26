@@ -66,6 +66,15 @@ unique_lines() {
   awk '!seen[$0]++'
 }
 
+read_lines_into_array() {
+  local array_name="$1"
+  local line
+  eval "$array_name=()"
+  while IFS= read -r line; do
+    eval "$array_name+=(\"\$line\")"
+  done
+}
+
 target_dir() {
   case "$1" in
     codex) printf "%s\n" "$HOME/.agents/skills" ;;
@@ -104,7 +113,7 @@ if [[ ! -d "$skills_root" ]]; then
   exit 1
 fi
 
-mapfile -t available_skills < <(find "$skills_root" -mindepth 2 -maxdepth 2 -name SKILL.md -print | sed -E 's#^.*/skills/([^/]+)/SKILL.md#\1#' | sort)
+read_lines_into_array available_skills < <(find "$skills_root" -mindepth 2 -maxdepth 2 -name SKILL.md -print | sed -E 's#^.*/skills/([^/]+)/SKILL.md#\1#' | sort)
 if [[ ${#available_skills[@]} -eq 0 ]]; then
   echo "No skills found in $REPO@$REF" >&2
   exit 1
@@ -113,7 +122,7 @@ fi
 if [[ $ALL_SKILLS -eq 1 ]]; then
   selected_skills=("${available_skills[@]}")
 elif [[ ${#SKILLS[@]} -gt 0 ]]; then
-  mapfile -t selected_skills < <(split_csv_items "${SKILLS[@]}" | unique_lines)
+  read_lines_into_array selected_skills < <(split_csv_items "${SKILLS[@]}" | unique_lines)
 else
   echo "Skills:" > /dev/tty
   for i in "${!available_skills[@]}"; do
@@ -146,7 +155,7 @@ for skill in "${selected_skills[@]}"; do
 done
 
 if [[ ${#TARGETS[@]} -gt 0 ]]; then
-  mapfile -t selected_targets < <(split_csv_items "${TARGETS[@]}" | sed 's/^all$/codex\nclaude/' | unique_lines)
+  read_lines_into_array selected_targets < <(split_csv_items "${TARGETS[@]}" | sed 's/^all$/codex\nclaude/' | unique_lines)
 else
   target_options=(codex claude codex-legacy)
   echo "Targets:" > /dev/tty
@@ -171,7 +180,7 @@ else
         selected_targets+=("$choice")
       fi
     done
-    mapfile -t selected_targets < <(printf "%s\n" "${selected_targets[@]}" | unique_lines)
+    read_lines_into_array selected_targets < <(printf "%s\n" "${selected_targets[@]}" | unique_lines)
   fi
 fi
 

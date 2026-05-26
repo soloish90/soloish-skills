@@ -4,7 +4,6 @@ param(
     [string[]]$Target = @(),
     [string]$Repo = "soloish90/soloish-skills",
     [string]$Ref = "main",
-    [switch]$Yes,
     [switch]$DryRun,
     [switch]$Help
 )
@@ -24,7 +23,6 @@ Options:
   -Target NAME      codex, claude, or all. Repeatable.
   -Repo OWNER/REPO  GitHub repo. Default: soloish90/soloish-skills.
   -Ref REF          Git ref. Default: main.
-  -Yes              Replace existing installed skills without prompting.
   -DryRun           Show what would be installed.
   -Help             Show help.
 "@
@@ -151,25 +149,6 @@ try {
 
     foreach ($targetName in $selectedTargets) {
         [void](Get-TargetDir $targetName)
-    }
-
-    $existing = @()
-    foreach ($targetName in $selectedTargets) {
-        $root = Get-TargetDir $targetName
-        foreach ($skillName in $selectedSkills) {
-            $dest = Join-Path $root $skillName
-            if (Test-Path $dest) { $existing += $dest }
-        }
-    }
-
-    if ($existing.Count -gt 0 -and -not $Yes -and -not $DryRun) {
-        Write-Host "These installed skills will be replaced:"
-        $existing | ForEach-Object { Write-Host "  $_" }
-        $answer = Read-Host "Replace them? [y/N]"
-        if ($answer -notin @("y", "Y", "yes", "YES")) {
-            Write-Host "Install cancelled."
-            exit 1
-        }
     }
 
     foreach ($targetName in $selectedTargets) {

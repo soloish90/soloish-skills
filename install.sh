@@ -6,7 +6,6 @@ REF="main"
 SKILLS=()
 TARGETS=()
 ALL_SKILLS=0
-YES=0
 DRY_RUN=0
 
 usage() {
@@ -22,7 +21,6 @@ Options:
   --target NAME      codex, claude, or all. Repeatable.
   --repo OWNER/REPO  GitHub repo. Default: soloish90/soloish-skills.
   --ref REF          Git ref. Default: main.
-  -y, --yes          Replace existing installed skills without prompting.
   --dry-run          Show what would be installed.
   -h, --help         Show help.
 EOF
@@ -35,7 +33,6 @@ while [[ $# -gt 0 ]]; do
     --target) TARGETS+=("${2:?missing target name}"); shift 2 ;;
     --repo) REPO="${2:?missing repo}"; shift 2 ;;
     --ref) REF="${2:?missing ref}"; shift 2 ;;
-    -y|--yes) YES=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "Unknown option: $1" >&2; usage >&2; exit 2 ;;
@@ -185,21 +182,6 @@ fi
 for target in "${selected_targets[@]}"; do
   case "$target" in codex|claude) ;; *) echo "Unknown target: $target" >&2; exit 2 ;; esac
 done
-
-existing=()
-for target in "${selected_targets[@]}"; do
-  root="$(target_dir "$target")"
-  for skill in "${selected_skills[@]}"; do
-    [[ -e "$root/$skill" ]] && existing+=("$root/$skill")
-  done
-done
-
-if [[ ${#existing[@]} -gt 0 && $YES -eq 0 && $DRY_RUN -eq 0 ]]; then
-  echo "These installed skills will be replaced:" > /dev/tty
-  printf "  %s\n" "${existing[@]}" > /dev/tty
-  answer="$(read_from_tty "Replace them? [y/N] ")"
-  [[ "$answer" == "y" || "$answer" == "Y" || "$answer" == "yes" || "$answer" == "YES" ]] || { echo "Install cancelled."; exit 1; }
-fi
 
 for target in "${selected_targets[@]}"; do
   root="$(target_dir "$target")"

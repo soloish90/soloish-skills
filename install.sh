@@ -19,7 +19,7 @@ Usage:
 Options:
   --skill NAME       Skill to install. Repeatable.
   --all-skills       Install every skill.
-  --target NAME      codex, codex-legacy, claude, or all. Repeatable.
+  --target NAME      codex, claude, or all. Repeatable.
   --repo OWNER/REPO  GitHub repo. Default: soloish90/soloish-skills.
   --ref REF          Git ref. Default: main.
   -y, --yes          Replace existing installed skills without prompting.
@@ -78,7 +78,6 @@ read_lines_into_array() {
 target_dir() {
   case "$1" in
     codex) printf "%s\n" "$HOME/.agents/skills" ;;
-    codex-legacy) printf "%s\n" "${CODEX_HOME:-$HOME/.codex}/skills" ;;
     claude) printf "%s\n" "$HOME/.claude/skills" ;;
     *) echo "Unknown target: $1" >&2; exit 2 ;;
   esac
@@ -87,7 +86,6 @@ target_dir() {
 target_label() {
   case "$1" in
     codex) printf "Codex" ;;
-    codex-legacy) printf "Codex legacy" ;;
     claude) printf "Claude Code" ;;
   esac
 }
@@ -157,7 +155,7 @@ done
 if [[ ${#TARGETS[@]} -gt 0 ]]; then
   read_lines_into_array selected_targets < <(split_csv_items "${TARGETS[@]}" | sed 's/^all$/codex\nclaude/' | unique_lines)
 else
-  target_options=(codex claude codex-legacy)
+  target_options=(codex claude)
   echo "Targets:" > /dev/tty
   for i in "${!target_options[@]}"; do
     printf "  %d. %s\n" "$((i + 1))" "${target_options[$i]}" > /dev/tty
@@ -185,7 +183,7 @@ else
 fi
 
 for target in "${selected_targets[@]}"; do
-  case "$target" in codex|codex-legacy|claude) ;; *) echo "Unknown target: $target" >&2; exit 2 ;; esac
+  case "$target" in codex|claude) ;; *) echo "Unknown target: $target" >&2; exit 2 ;; esac
 done
 
 existing=()

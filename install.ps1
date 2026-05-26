@@ -21,7 +21,7 @@ Usage:
 Options:
   -Skill NAME       Skill to install. Repeatable.
   -AllSkills        Install every skill.
-  -Target NAME      codex, codex-legacy, claude, or all. Repeatable.
+  -Target NAME      codex, claude, or all. Repeatable.
   -Repo OWNER/REPO  GitHub repo. Default: soloish90/soloish-skills.
   -Ref REF          Git ref. Default: main.
   -Yes              Replace existing installed skills without prompting.
@@ -49,13 +49,6 @@ function Split-Items([string[]]$Items) {
 function Get-TargetDir([string]$Name) {
     switch ($Name) {
         "codex" { Join-Path $HOME ".agents/skills" }
-        "codex-legacy" {
-            if ($env:CODEX_HOME) {
-                Join-Path $env:CODEX_HOME "skills"
-            } else {
-                Join-Path $HOME ".codex/skills"
-            }
-        }
         "claude" { Join-Path $HOME ".claude/skills" }
         default { throw "Unknown target: $Name" }
     }
@@ -64,7 +57,6 @@ function Get-TargetDir([string]$Name) {
 function Get-TargetLabel([string]$Name) {
     switch ($Name) {
         "codex" { "Codex" }
-        "codex-legacy" { "Codex legacy" }
         "claude" { "Claude Code" }
         default { throw "Unknown target: $Name" }
     }
@@ -154,7 +146,7 @@ try {
         }
         $selectedTargets = $selectedTargets | Select-Object -Unique
     } else {
-        $selectedTargets = Prompt-ChoiceList "Targets:" @("codex", "claude", "codex-legacy") @("codex", "claude")
+        $selectedTargets = Prompt-ChoiceList "Targets:" @("codex", "claude") @("codex", "claude")
     }
 
     foreach ($targetName in $selectedTargets) {

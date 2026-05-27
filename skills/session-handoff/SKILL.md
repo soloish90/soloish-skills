@@ -19,6 +19,7 @@ Write the handoff naturally. Do not turn it into a transcript or force a rigid t
 - settled decisions and user corrections
 - failed or abandoned paths that should not be reopened casually
 - important files, commands, tests, diagnostics, docs, and config
+- how the project is built, launched, tested, debugged, or otherwise operated, especially when the team uses a wrapper script or non-obvious command instead of the default tool command
 - verification status, risks, open questions, and user preferences
 
 Keep it final-state oriented. Make clear what is current versus historical. Be concrete with paths and commands where that helps. Avoid routine chatter, raw logs, secrets, and unnecessary ceremony.

@@ -26,4 +26,6 @@ Keep it final-state oriented. Make clear what is current versus historical. Be c
 
 Treat repo state as context, not as an automatic instruction. Do not tell the next agent to commit, push, release, or otherwise perform project actions unless the user explicitly asked for that as the next step. If you include suggested next work, phrase it as possible continuation options, not commands.
 
+Make clear that the handoff is orientation material. The next agent should review the handoff and inspect the current repo before making changes; it should not immediately edit code based only on the handoff.
+
 After writing the file, briefly report the path and what the handoff captures.

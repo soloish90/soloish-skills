@@ -24,4 +24,6 @@ Write the handoff naturally. Do not turn it into a transcript or force a rigid t
 
 Keep it final-state oriented. Make clear what is current versus historical. Be concrete with paths and commands where that helps. Avoid routine chatter, raw logs, secrets, and unnecessary ceremony.
 
+Treat repo state as context, not as an automatic instruction. Do not tell the next agent to commit, push, release, or otherwise perform project actions unless the user explicitly asked for that as the next step. If you include suggested next work, phrase it as possible continuation options, not commands.
+
 After writing the file, briefly report the path and what the handoff captures.

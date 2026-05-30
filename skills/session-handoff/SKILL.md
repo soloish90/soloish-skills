@@ -1,11 +1,13 @@
 ---
 name: session-handoff
-description: Write a concise, agent-facing Markdown handoff for a fresh coding-agent session. Use when the user asks to hand off, summarize, condense, preserve, export, resume, or transfer important context from the current session into a new agent session.
+description: Write a concise, agent-facing Markdown handoff only when the user wants to transfer the current conversation/session context into a fresh or new coding-agent session. Do not use for handoff documents about a specific feature, task, block of work, code review, plan, or provided material unless the user explicitly says to hand off this current session to a new session.
 ---
 
 # Session Handoff
 
 Create a Markdown handoff document that lets a fresh agent session continue the work without inherited chat context.
+
+Use this skill only for current-session handoff. If the user asks for a handoff document about a specific feature, block of work, codebase area, plan, review, or supplied content, follow that request directly instead of using this skill unless they explicitly ask to hand off the current session.
 
 If the user names a file or path, write there. Otherwise write `HANDOFF.md` in the current workspace.
 
